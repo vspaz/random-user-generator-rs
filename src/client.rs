@@ -1,7 +1,6 @@
 use crate::config::{get_config, Config};
 use reqwest;
 use reqwest::blocking::Response;
-use std::time::Duration;
 
 pub struct ApiClient {
     api_client: reqwest::blocking::Client,
@@ -32,6 +31,15 @@ impl ApiClient {
         latin_only: bool,
         name_only: bool,
     ) -> Response {
+        let mut query_params = [("seed", seed), ("results", user_count.to_string().as_str())];
+        if latin_only {
+            query_params.fill(("nat", "us,gb,au,ca,ie"))
+        }
+
+        if name_only {
+            query_params.fill(("inc", "name"))
+        }
+
         let resp = self
             .api_client
             .get(self.config.endpoint.as_str().to_owned())
