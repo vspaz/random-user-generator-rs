@@ -1,17 +1,5 @@
 use serde::Deserialize;
 
-
-struct Info {
-    #[serde(skip_deserializing)]
-    pub seed: String,
-    #[serde(skip_deserializing)]
-    pub results: i64,
-    #[serde(skip_deserializing)]
-    pub page: i64,
-    #[serde(skip_deserializing)]
-    pub version: String,
-}
-
 #[derive(Debug, Deserialize)]
 struct Id {
     pub name: Option<String>,
@@ -57,7 +45,7 @@ struct Location {
     pub coordinates: Option<Coordinates>,
     pub timezone: Option<Timezone>,
 }
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize)]
 struct Name {
     pub title: String,
     pub first: String,
@@ -77,9 +65,7 @@ struct User {
     pub id: Option<Id>,
     pub nat: Option<String>,
 }
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize)]
 struct Users {
     pub results: Vec<User>,
-    #[serde(skip_deserializing)]
-    info: Info,
 }
