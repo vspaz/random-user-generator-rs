@@ -1,6 +1,6 @@
-use std::time::Duration;
 use reqwest;
 use reqwest::blocking::Response;
+use std::time::Duration;
 
 pub struct ApiClient {
     api_client: reqwest::blocking::Client,
@@ -13,7 +13,9 @@ impl ApiClient {
                 .connect_timeout(Duration::from_secs(10))
                 .timeout(Duration::from_secs(10))
                 .user_agent("random-user")
-                .build().unwrap());
+                .build()
+                .unwrap(),
+        );
         return ApiClient {
             api_client: http_client,
         };

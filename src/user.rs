@@ -21,7 +21,12 @@ impl RandomUserData {
     }
 
     pub fn generate(&self) -> Vec<User> {
-        let resp = self.api_client.fetch_random_user_info(&self.seed, self.user_count, self.latin_only, self.name_only);
+        let resp = self.api_client.fetch_random_user_info(
+            &self.seed,
+            self.user_count,
+            self.latin_only,
+            self.name_only,
+        );
         let payload: Users = resp.json().unwrap();
         payload.results
     }
