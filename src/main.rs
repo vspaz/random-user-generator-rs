@@ -1,4 +1,3 @@
 mod userdata;
 
-fn main() {
-}
+fn main() {}
