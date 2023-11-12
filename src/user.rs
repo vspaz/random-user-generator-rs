@@ -11,13 +11,13 @@ pub struct RandomUserData {
 
 impl RandomUserData {
     pub fn new(seed: &str, user_count: u64, latin_only: bool, name_only: bool) -> RandomUserData {
-        return RandomUserData {
+        RandomUserData {
             seed: String::from(seed),
             user_count,
             name_only,
             latin_only,
             api_client: ApiClient::new(None),
-        };
+        }
     }
 
     pub fn generate(&self) -> Vec<User> {

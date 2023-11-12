@@ -1,5 +1,4 @@
 use crate::config::{get_config, Config};
-use reqwest;
 use reqwest::blocking::Response;
 
 pub struct ApiClient {
@@ -14,14 +13,14 @@ impl ApiClient {
             reqwest::blocking::Client::builder()
                 .connect_timeout(config.timeout.connect.to_owned())
                 .timeout(config.timeout.general.to_owned())
-                .user_agent(&config.user_agent.to_owned())
+                .user_agent(config.user_agent.to_owned())
                 .build()
                 .unwrap(),
         );
-        return ApiClient {
+        ApiClient {
             api_client: http_client,
             config,
-        };
+        }
     }
 
     pub fn fetch_random_user_info(
@@ -31,9 +30,10 @@ impl ApiClient {
         latin_only: bool,
         name_only: bool,
     ) -> Response {
-        let mut query_params = [("seed", seed), ("results", user_count.to_string().as_str())];
+        let result_count = user_count.to_string();
+        let mut query_params = [("seed", seed), ("results", result_count.as_str())];
         if latin_only {
-            query_params.fill(("nat", "us,gb,au,ca,ie"))
+            query_params.fill(("nat", self.config.default_countries.as_str()))
         }
 
         if name_only {
