@@ -1,9 +1,28 @@
 use crate::client::ApiClient;
-use crate::userdata::Users;
+use crate::userdata::{User, Users};
 
-pub fn generate() {
-    let api_client = ApiClient::new(None);
-    let resp = api_client.fetch_random_user_info("foobar", 1, false, false);
-    let payload: Users = resp.json().unwrap();
-    println!("{}", payload.results[0].name.first);
+pub struct RandomUserData {
+    seed: String,
+    user_count: u64,
+    latin_only: bool,
+    name_only: bool,
+    api_client: ApiClient,
+}
+
+impl RandomUserData {
+    pub fn new(seed: &str, user_count: u64, latin_only: bool, name_only: bool) -> RandomUserData {
+        return RandomUserData {
+            seed: String::from(seed),
+            user_count,
+            name_only,
+            latin_only,
+            api_client: ApiClient::new(None),
+        };
+    }
+
+    pub fn generate(&self) -> Vec<User> {
+        let resp = self.api_client.fetch_random_user_info(&self.seed, self.user_count, self.latin_only, self.name_only);
+        let payload: Users = resp.json().unwrap();
+        payload.results
+    }
 }
