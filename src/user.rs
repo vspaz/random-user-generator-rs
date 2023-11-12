@@ -12,7 +12,7 @@ pub struct RandomUserData {
 impl RandomUserData {
     pub fn new(seed: &str, user_count: u64, latin_only: bool, name_only: bool) -> RandomUserData {
         RandomUserData {
-            seed: String::from(seed),
+            seed: seed.to_string(),
             user_count,
             name_only,
             latin_only,

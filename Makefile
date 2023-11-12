@@ -2,6 +2,10 @@ all: build
 build:
 	cargo build --workspace
 
+.PHONY: run-examples
+run-examples:
+	cargo run --example random_users
+
 .PHONY: test
 test:
 	cargo test -- --test-threads=8
