@@ -1,3 +1,5 @@
-mod userdata;
+use random_usergenerator_rs::user;
 
-fn main() {}
+fn main() {
+    user::generate()
+}

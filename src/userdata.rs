@@ -1,17 +1,17 @@
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
-struct Id {
+pub struct Id {
     pub name: Option<String>,
     pub value: Option<String>,
 }
 #[derive(Debug, Deserialize)]
-struct DateOfBirth {
+pub struct DateOfBirth {
     pub date: Option<String>,
     pub age: Option<i64>,
 }
 #[derive(Debug, Deserialize)]
-struct Login {
+pub struct Login {
     pub uuid: Option<String>,
     pub username: Option<String>,
     pub password: Option<String>,
@@ -21,22 +21,22 @@ struct Login {
     pub sha256: Option<String>,
 }
 #[derive(Debug, Deserialize)]
-struct Timezone {
+pub struct Timezone {
     pub offset: Option<String>,
     pub description: Option<String>,
 }
 #[derive(Debug, Deserialize)]
-struct Coordinates {
+pub struct Coordinates {
     pub latitude: Option<String>,
     pub longitude: Option<String>,
 }
 #[derive(Debug, Deserialize)]
-struct Street {
+pub struct Street {
     pub number: Option<i64>,
     pub name: Option<String>,
 }
 #[derive(Debug, Deserialize)]
-struct Location {
+pub struct Location {
     pub street: Option<Street>,
     pub city: Option<String>,
     pub state: Option<String>,
@@ -46,13 +46,13 @@ struct Location {
     pub timezone: Option<Timezone>,
 }
 #[derive(Debug, Deserialize)]
-struct Name {
+pub struct Name {
     pub title: String,
     pub first: String,
     pub last: String,
 }
 #[derive(Debug, Deserialize)]
-struct User {
+pub struct User {
     pub gender: Option<String>,
     pub name: Name,
     pub location: Option<Location>,
@@ -66,6 +66,6 @@ struct User {
     pub nat: Option<String>,
 }
 #[derive(Debug, Deserialize)]
-struct Users {
+pub struct Users {
     pub results: Vec<User>,
 }
