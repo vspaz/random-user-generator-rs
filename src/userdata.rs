@@ -41,7 +41,7 @@ pub struct Location {
     pub city: Option<String>,
     pub state: Option<String>,
     pub country: Option<String>,
-    pub postcode: Option<String>,
+    pub postcode: Option<i64>,
     pub coordinates: Option<Coordinates>,
     pub timezone: Option<Timezone>,
 }
