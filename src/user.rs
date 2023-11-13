@@ -2,7 +2,7 @@ use crate::client::ApiClient;
 use crate::userdata::User;
 use reqwest::Error;
 
-pub struct RandomUserData {
+pub struct Data {
     seed: String,
     user_count: u64,
     latin_only: bool,
@@ -10,9 +10,9 @@ pub struct RandomUserData {
     api_client: ApiClient,
 }
 
-impl RandomUserData {
-    pub fn new(seed: &str, user_count: u64, latin_only: bool, name_only: bool) -> RandomUserData {
-        RandomUserData {
+impl Data {
+    pub fn new(seed: &str, user_count: u64, latin_only: bool, name_only: bool) -> Data {
+        Data {
             seed: seed.to_string(),
             user_count,
             name_only,
