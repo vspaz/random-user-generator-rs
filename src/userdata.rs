@@ -1,6 +1,13 @@
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
+#[serde(untagged)]
+pub enum Postcode {
+    String(String),
+    Integer(i64),
+}
+
+#[derive(Debug, Deserialize)]
 pub struct Id {
     pub name: Option<String>,
     pub value: Option<String>,
@@ -35,16 +42,18 @@ pub struct Street {
     pub number: Option<i64>,
     pub name: Option<String>,
 }
+
 #[derive(Debug, Deserialize)]
 pub struct Location {
     pub street: Option<Street>,
     pub city: Option<String>,
     pub state: Option<String>,
     pub country: Option<String>,
-    pub postcode: Option<i64>,
+    pub postcode: Option<Postcode>,
     pub coordinates: Option<Coordinates>,
     pub timezone: Option<Timezone>,
 }
+
 #[derive(Debug, Deserialize)]
 pub struct Name {
     pub title: String,
