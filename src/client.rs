@@ -29,7 +29,7 @@ impl ApiClient {
         user_count: u64,
         latin_only: bool,
         name_only: bool,
-    ) -> Response {
+    ) -> reqwest::Result<Response> {
         let result_count = user_count.to_string();
         let mut query_params = [("seed", seed), ("results", result_count.as_str())];
         if latin_only {
@@ -43,8 +43,7 @@ impl ApiClient {
         let resp = self
             .api_client
             .get(self.config.endpoint.as_str().to_owned())
-            .send()
-            .unwrap();
+            .send();
         resp
     }
 }
