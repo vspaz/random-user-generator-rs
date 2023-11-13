@@ -22,11 +22,11 @@ impl RandomUserData {
     }
 
     pub fn generate(&self) -> Result<Vec<User>, Error> {
-        return self.api_client.fetch_random_user_info(
+        self.api_client.fetch_random_user_info(
             &self.seed,
             self.user_count,
             self.latin_only,
             self.name_only,
-        );
+        )
     }
 }
