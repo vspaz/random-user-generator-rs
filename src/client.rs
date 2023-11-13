@@ -41,11 +41,11 @@ impl ApiClient {
             query_params.fill(("inc", "name"))
         }
 
-        let resp = self
+        match self
             .api_client
             .get(self.config.endpoint.as_str().to_owned())
-            .send();
-        match resp {
+            .send()
+        {
             Ok(resp) => {
                 let body: Users = resp.json()?;
                 Ok(body.results)
