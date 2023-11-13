@@ -1,5 +1,5 @@
 use crate::client::ApiClient;
-use crate::userdata::{User, Users};
+use crate::userdata::User;
 use reqwest::Error;
 
 pub struct RandomUserData {
@@ -22,17 +22,11 @@ impl RandomUserData {
     }
 
     pub fn generate(&self) -> Result<Vec<User>, Error> {
-        return match self.api_client.fetch_random_user_info(
+        return self.api_client.fetch_random_user_info(
             &self.seed,
             self.user_count,
             self.latin_only,
             self.name_only,
-        ) {
-            Ok(resp) => {
-                let body: Users = resp.json()?;
-                Ok(body.results)
-            }
-            Err(e) => Err(e),
-        };
+        );
     }
 }

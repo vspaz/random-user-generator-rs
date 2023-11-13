@@ -1,5 +1,6 @@
 use crate::config::{get_config, Config};
-use reqwest::blocking::Response;
+use crate::userdata::{User, Users};
+use reqwest::Error;
 
 pub struct ApiClient {
     api_client: reqwest::blocking::Client,
@@ -29,7 +30,7 @@ impl ApiClient {
         user_count: u64,
         latin_only: bool,
         name_only: bool,
-    ) -> reqwest::Result<Response> {
+    ) -> Result<Vec<User>, Error> {
         let result_count = user_count.to_string();
         let mut query_params = [("seed", seed), ("results", result_count.as_str())];
         if latin_only {
@@ -44,6 +45,12 @@ impl ApiClient {
             .api_client
             .get(self.config.endpoint.as_str().to_owned())
             .send();
-        resp
+        match resp {
+            Ok(resp) => {
+                let body: Users = resp.json()?;
+                Ok(body.results)
+            }
+            Err(e) => Err(e),
+        }
     }
 }
