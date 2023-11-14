@@ -1,7 +1,7 @@
 use crate::config::{get_config, Config};
 use crate::userdata::{User, Users};
 use reqwest::Error;
-use simple_log::{debug, LogConfigBuilder};
+use simple_log::debug;
 
 pub struct ApiClient {
     api_client: reqwest::blocking::Client,
@@ -11,12 +11,6 @@ pub struct ApiClient {
 impl ApiClient {
     pub fn new(client: Option<reqwest::blocking::Client>) -> ApiClient {
         let config = get_config();
-        let log_config = LogConfigBuilder::builder()
-            .time_format(&config.logging.time_format)
-            .level(&config.logging.level)
-            .output_console()
-            .build();
-        simple_log::new(log_config).expect("failed to configure logger");
         let http_client = client.unwrap_or(
             reqwest::blocking::Client::builder()
                 .connect_timeout(config.timeout.connect.to_owned())
@@ -85,7 +79,6 @@ fn test_fetch_random_user_info_name_ok() {
     assert_eq!("Schmidt", user.name.last);
     assert_eq!("Mr", user.name.title);
 }
-
 
 #[test]
 fn test_fetch_random_user_info_full_ok() {
