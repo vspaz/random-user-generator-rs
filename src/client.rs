@@ -63,3 +63,30 @@ impl ApiClient {
         }
     }
 }
+
+#[test]
+fn test_fetch_random_user_info_name_ok() {
+    use httptest::{matchers::*, responders::*, Expectation, Server};
+    let server = Server::run();
+    let response_body = r#"
+    {"results":[{"name":{"title":"Mr","first":"Lewis","last":"Schmidt"}}],
+    "info":{"seed":"2b834efd58cd6a19","results":1,"page":1,"version":"1.4"}}
+    "#;
+    server.expect(
+        Expectation::matching(request::method_path("GET", "/api"))
+            .respond_with(status_code(200).body(response_body)),
+    );
+    let mut config = get_config();
+    config.endpoint = server.url("/api").to_string();
+    let api_client = ApiClient {
+        api_client: reqwest::blocking::Client::builder()
+            .connect_timeout(config.timeout.connect.to_owned())
+            .timeout(config.timeout.general.to_owned())
+            .user_agent(config.user_agent.to_owned())
+            .build()
+            .unwrap(),
+        config,
+    };
+    let resp = api_client.fetch_random_user_info("foobar", 1, true, true);
+    assert_eq!("Lewis", resp.unwrap()[0].name.first)
+}
