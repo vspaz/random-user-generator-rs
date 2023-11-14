@@ -76,17 +76,12 @@ fn test_fetch_random_user_info_name_ok() {
         Expectation::matching(request::method_path("GET", "/api"))
             .respond_with(status_code(200).body(response_body)),
     );
-    let mut config = get_config();
-    config.endpoint = server.url("/api").to_string();
-    let api_client = ApiClient {
-        api_client: reqwest::blocking::Client::builder()
-            .connect_timeout(config.timeout.connect.to_owned())
-            .timeout(config.timeout.general.to_owned())
-            .user_agent(config.user_agent.to_owned())
-            .build()
-            .unwrap(),
-        config,
-    };
+    let mut api_client = ApiClient::new(None);
+    api_client.config.endpoint = server.url("/api").to_string();
     let resp = api_client.fetch_random_user_info("foobar", 1, true, true);
-    assert_eq!("Lewis", resp.unwrap()[0].name.first)
+    let user = &resp.unwrap()[0];
+
+    assert_eq!("Lewis", user.name.first);
+    assert_eq!("Schmidt", user.name.last);
+    assert_eq!("Mr", user.name.title);
 }
