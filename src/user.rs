@@ -11,7 +11,7 @@ pub struct Data {
 }
 
 impl Data {
-    pub fn new(seed: &str, user_count: u64, latin_only: bool, name_only: bool) -> Data {
+    pub fn new(seed: &str, user_count: u64, latin_only: bool, name_only: bool) -> Self {
         Data {
             seed: seed.to_string(),
             user_count,

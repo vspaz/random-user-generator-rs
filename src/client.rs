@@ -9,7 +9,7 @@ pub struct ApiClient {
 }
 
 impl ApiClient {
-    pub fn new(client: Option<reqwest::blocking::Client>) -> ApiClient {
+    pub fn new(client: Option<reqwest::blocking::Client>) -> Self {
         let config = get_config();
         let http_client = client.unwrap_or(
             reqwest::blocking::Client::builder()
