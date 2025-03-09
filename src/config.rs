@@ -1,5 +1,6 @@
 use std::time::Duration;
 
+#[allow(dead_code)]
 pub struct Logging {
     pub level: String,
     pub time_format: String,
@@ -10,6 +11,7 @@ pub struct Timeout {
     pub general: Duration,
 }
 
+#[allow(dead_code)]
 pub struct Config {
     pub endpoint: String,
     pub user_agent: String,

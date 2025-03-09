@@ -1,5 +1,4 @@
 #[cfg(test)]
-#[macro_use]
 extern crate simple_log;
 
 mod client;
